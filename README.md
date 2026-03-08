@@ -124,6 +124,9 @@ Full reference: [docs/PROJECT_STRUCTURE.md](docs/PROJECT_STRUCTURE.md)
 # Start the server
 bundle exec rails server
 
+# Windows: stop the current Rails PID and boot a fresh server
+bin\restart_server.cmd
+
 # Open the interactive Rails console
 bundle exec rails console
 

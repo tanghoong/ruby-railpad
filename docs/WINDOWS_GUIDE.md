@@ -156,6 +156,16 @@ Then run it with:
 bash start.sh
 ```
 
+### Restart the server in one command
+
+If you want to stop the current Rails process, clear the stale PID file, and start a fresh server again, run:
+
+```powershell
+bin\restart_server.cmd
+```
+
+This uses `tmp/pids/server.pid` first, then also frees port `3000` if another Rails process is still listening there.
+
 ---
 
 ## 4. Stopping the Server
