@@ -1,0 +1,56 @@
+<% content_for :title, @gist.title %>
+
+<div class="article-detail">
+  <div class="article-detail-header">
+    <h1 class="article-detail-title"><%= @gist.title %></h1>
+    <div class="article-detail-meta">
+      <span class="gist-lang-badge"><%= @gist.language %></span>
+      <span class="badge <%= @gist.published? ? 'badge--published' : 'badge--draft' %>">
+        <%= @gist.published_status %>
+      </span>
+      <span><strong>Created:</strong> <%= @gist.created_at.strftime("%B %d, %Y") %></span>
+      <% if @gist.article.present? %>
+        <span><strong>Article:</strong> <%= link_to @gist.article.title, @gist.article %></span>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @gist.description.present? %>
+    <p class="gist-description"><%= @gist.description %></p>
+  <% end %>
+
+  <div class="code-block">
+    <div class="code-block__header">
+      <span class="code-block__lang"><%= @gist.language %></span>
+      <%= button_to "▶ Run", run_gist_path(@gist), method: :post, class: "btn btn-primary btn-sm run-btn" %>
+    </div>
+    <pre><code class="language-ruby"><%= @gist.code %></code></pre>
+  </div>
+
+  <% if @gist.ran? %>
+    <div class="gist-output">
+      <div class="gist-output__header">
+        Output
+        <span class="gist-output__time">— ran <%= @gist.output_at.strftime("%d %b %Y at %H:%M") %></span>
+      </div>
+      <pre class="gist-output__pre"><%= @gist.output.presence || "(no output)" %></pre>
+    </div>
+  <% end %>
+</div>
+
+<div class="nav-actions">
+  <%= link_to "Edit", edit_gist_path(@gist), class: "btn btn-secondary" %>
+  <%= link_to "All gists", gists_path, class: "btn btn-secondary" %>
+  <%= button_to "Delete", @gist, method: :delete,
+      class: "btn btn-danger",
+      form: { data: { turbo_confirm: "Delete this gist?" } } %>
+</div>
+
+<script>
+  document.addEventListener("turbo:load", function() {
+    if (window.Prism) Prism.highlightAll();
+  });
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.Prism) Prism.highlightAll();
+  });
+</script>

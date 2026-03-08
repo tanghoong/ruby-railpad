@@ -33,3 +33,47 @@
 end
 
 puts "Seeded #{Article.count} articles"
+
+# ── Sample gists ──────────────────────────────────────────
+first_article = Article.find_by(title: "Getting Started with Rails")
+
+[
+  {
+    title: "Hello, Ruby!",
+    description: "The classic first program — printing to stdout.",
+    code: "puts \"Hello, Ruby!\"\nputs \"Today is: \#{Date.today}\"",
+    language: "ruby",
+    published: true,
+    article: nil
+  },
+  {
+    title: "Array methods",
+    description: "Common Array methods every Rubyist should know.",
+    code: "numbers = [3, 1, 4, 1, 5, 9, 2, 6]\n\nputs numbers.sort.inspect\nputs numbers.uniq.inspect\nputs numbers.select { |n| n > 3 }.inspect\nputs numbers.map { |n| n * 2 }.inspect\nputs numbers.sum",
+    language: "ruby",
+    published: true,
+    article: first_article
+  },
+  {
+    title: "Hash basics",
+    description: "Creating and iterating over a Hash.",
+    code: "person = { name: \"Alice\", age: 30, role: \"developer\" }\n\nperson.each do |key, value|\n  puts \"\#{key}: \#{value}\"\nend\n\nputs person[:name].upcase",
+    language: "ruby",
+    published: true,
+    article: first_article
+  },
+  {
+    title: "Fibonacci sequence",
+    description: "Generate the first N Fibonacci numbers.",
+    code: "def fibonacci(n)\n  sequence = [0, 1]\n  (n - 2).times { sequence << sequence[-1] + sequence[-2] }\n  sequence.first(n)\nend\n\nputs fibonacci(10).inspect",
+    language: "ruby",
+    published: false,
+    article: nil
+  }
+].each do |attrs|
+  article = attrs.delete(:article)
+  gist = Gist.find_or_create_by!(title: attrs[:title]) { |g| g.assign_attributes(attrs) }
+  gist.update!(article: article) if article && gist.article.nil?
+end
+
+puts "Seeded #{Gist.count} gists"

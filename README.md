@@ -1,6 +1,7 @@
-# ror-cms
+# Railpad
 
-A Ruby on Rails 8 CMS for managing articles — built as a hands-on learning project.
+A Ruby on Rails 8 learning platform — write articles about Ruby and Rails, save
+executable code snippets as Gists, and link them together.
 Covers the full Rails stack: MVC, ActiveRecord, RESTful routing, validations,
 scopes, testing, JSON API, and responsive UI.
 

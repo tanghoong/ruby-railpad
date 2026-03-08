@@ -1,0 +1,20 @@
+<tr class="article-row">
+  <td class="article-row__title" data-label="Title">
+    <%= link_to gist.title, gist %>
+    <% if gist.description.present? %>
+      <p class="article-row__excerpt"><%= truncate(gist.description, length: 80) %></p>
+    <% end %>
+  </td>
+  <td class="article-row__author" data-label="Language">
+    <span class="gist-lang-badge"><%= gist.language %></span>
+  </td>
+  <td data-label="Status">
+    <span class="badge <%= gist.published? ? 'badge--published' : 'badge--draft' %>">
+      <%= gist.published_status %>
+    </span>
+  </td>
+  <td class="article-row__date" data-label="Date"><%= gist.created_at.strftime("%d %b %Y") %></td>
+  <td class="article-row__actions">
+    <%= link_to "Edit", edit_gist_path(gist), class: "btn btn-ghost btn-sm" %>
+  </td>
+</tr>

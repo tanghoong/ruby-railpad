@@ -1,0 +1,47 @@
+<% content_for :title, "Gists" %>
+
+<div class="page-header">
+  <h1>Gists</h1>
+  <div class="page-header__meta"><%= @gists.size %> <%= "gist".pluralize(@gists.size) %></div>
+</div>
+
+<div class="search-bar">
+  <%= form_with url: gists_path, method: :get do |f| %>
+    <%= f.text_field :search, value: params[:search], placeholder: "Search title, description, code…", class: "search-bar__input", "aria-label": "Search" %>
+    <%= f.select :status,
+        options_for_select([["All", ""], ["Published", "published"], ["Drafts", "draft"]], params[:status]),
+        {},
+        class: "search-bar__select", "aria-label": "Status" %>
+    <%= f.submit "Search", class: "btn btn-primary btn-sm" %>
+    <% if params[:search].present? || params[:status].present? %>
+      <%= link_to "Clear", gists_path, class: "btn btn-ghost btn-sm" %>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @gists.any? %>
+  <table class="article-list">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Language</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @gists %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="empty-state">
+    <% if params[:search].present? || params[:status].present? %>
+      <p>No gists match your filters.</p>
+      <%= link_to "Clear Filters", gists_path, class: "btn btn-ghost" %>
+    <% else %>
+      <p>No gists yet.</p>
+      <%= link_to "+ Create your first gist", new_gist_path, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+<% end %>

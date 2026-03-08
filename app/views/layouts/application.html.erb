@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "ror-cms" %></title>
+    <title><%= content_for(:title) ? "#{content_for(:title)} — Railpad" : "Railpad" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -15,16 +15,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js" defer></script>
+
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
   </head>
 
   <body>
     <header class="header">
       <div class="container">
-        <a href="<%= root_path %>" class="logo">ror-cms</a>
+        <a href="<%= root_path %>" class="logo">Railpad</a>
         <nav class="nav">
           <%= link_to "Articles", articles_path, class: "nav-link" %>
-          <%= link_to "+ New Article", new_article_path, class: "nav-link nav-link--cta" %>
+          <%= link_to "Gists", gists_path, class: "nav-link" %>
+          <%= link_to "+ New", new_article_path, class: "nav-link nav-link--cta" %>
         </nav>
       </div>
     </header>
@@ -44,7 +48,7 @@
 
     <footer class="footer">
       <div class="container">
-        <span>&copy; <%= Time.current.year %> ror-cms</span>
+        <span>&copy; <%= Time.current.year %> Railpad</span>
         <span>Ruby on Rails <%= Rails.version %></span>
       </div>
     </footer>

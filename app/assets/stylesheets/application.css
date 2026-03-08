@@ -369,6 +369,143 @@ textarea.form-control { min-height: 160px; resize: vertical; line-height: 1.55; 
 }
 .empty-state p { color: var(--grey-3); margin-bottom: 1rem; font-size: 0.88rem; }
 
+/* ── Gist module ────────────────────────────────────────── */
+
+/* Language badge (replaces author column in gist list) */
+.gist-lang-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  background: var(--black);
+  color: var(--white);
+  border-radius: 3px;
+}
+
+/* Description below title on show page */
+.gist-description {
+  color: var(--grey-3);
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1.25rem;
+}
+
+/* Code block container */
+.code-block {
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1.25rem 0;
+}
+
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: var(--black);
+  color: var(--white);
+}
+
+.code-block__lang {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  opacity: 0.7;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 1.25rem;
+  overflow-x: auto;
+  background: #1d1f21; /* matches prism-tomorrow theme */
+  border-radius: 0;
+}
+
+.code-block pre code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Code textarea (monospace font in form) */
+.form-control--code {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+/* Run button inside code-block header */
+.run-btn {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+}
+
+/* Output section */
+.gist-output {
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 0 0 1.25rem;
+}
+
+.gist-output__header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 6px 14px;
+  background: var(--grey-1);
+  border-bottom: var(--border);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gist-output__time {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--grey-3);
+}
+
+.gist-output__pre {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  background: var(--white);
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--black);
+}
+
+/* Embedded gists section on article show page */
+.article-gists {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: var(--border);
+}
+
+.article-gists h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 1rem;
+  color: var(--grey-3);
+}
+
+.article-gists .code-block {
+  margin: 0 0 1rem;
+}
+
 /* ── Utilities ──────────────────────────────────────────── */
 .text-center { text-align: center; }
 .mb-1 { margin-bottom: 0.5rem; }

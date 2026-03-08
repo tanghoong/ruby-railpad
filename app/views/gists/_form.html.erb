@@ -1,0 +1,45 @@
+<div class="form-container">
+  <%= form_with(model: gist) do |form| %>
+    <% if gist.errors.any? %>
+      <div class="alert-errors">
+        <h2><%= pluralize(gist.errors.count, "error") %> prohibited this gist from being saved:</h2>
+        <ul>
+          <% gist.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :title, class: "form-label" %>
+      <%= form.text_field :title, class: "form-control", placeholder: "Gist title..." %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_area :description, class: "form-control", placeholder: "Optional description...", rows: 2 %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :code, class: "form-label" %>
+      <%= form.text_area :code, class: "form-control form-control--code", placeholder: "# Write your Ruby code here...", rows: 16 %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :article_id, "Link to Article (optional)", class: "form-label" %>
+      <%= form.collection_select :article_id, Article.order(:title), :id, :title,
+            { include_blank: "— none —" },
+            class: "form-control" %>
+    </div>
+
+    <div class="form-group form-checkbox">
+      <%= form.check_box :published %>
+      <%= form.label :published, "Publish this gist" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

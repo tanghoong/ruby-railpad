@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   resources :articles
 
+  resources :gists do
+    member do
+      post :run
+    end
+  end
+
   # Health check endpoint (used by load balancers / uptime monitors)
   get "up" => "rails/health#show", as: :rails_health_check
 
