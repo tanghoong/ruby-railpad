@@ -9,7 +9,7 @@
 #   end
 
 # Create sample articles for the CMS
-Article.create([
+[
   {
     title: "Welcome to our CMS",
     content: "This is a basic Ruby on Rails CMS built with scaffolding. You can create, read, update, and delete articles.",
@@ -28,6 +28,8 @@ Article.create([
     author: "Jane Smith",
     published: false
   }
-])
+].each do |attrs|
+  Article.find_or_create_by!(title: attrs[:title]) { |a| a.assign_attributes(attrs) }
+end
 
-puts "Created #{Article.count} articles"
+puts "Seeded #{Article.count} articles"

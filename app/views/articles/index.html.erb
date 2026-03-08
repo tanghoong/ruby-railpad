@@ -1,60 +1,60 @@
 <% content_for :title, "Articles" %>
 
-<h1>Articles</h1>
+<div class="page-header">
+  <h1>Articles</h1>
+  <div class="page-header__meta"><%= @articles.size %> <%= "article".pluralize(@articles.size) %></div>
+</div>
 
-<div class="search-filter-section">
-  <%= form_with url: articles_path, method: :get, class: "search-form" do |f| %>
-    <div class="search-controls">
-      <div class="search-group">
-        <%= f.text_field :search, value: params[:search], placeholder: "Search articles...", class: "form-control search-input", "aria-label": "Search articles" %>
-        <%= f.submit "Search", class: "btn btn-primary btn-sm" %>
-      </div>
-      <div class="filter-group">
-        <%= f.select :status, 
-            options_for_select([["All Articles", ""], ["Published", "published"], ["Drafts", "draft"]], params[:status]),
-            {}, 
-            class: "form-control filter-select", "aria-label": "Filter articles by status" %>
-      </div>
-      <% if params[:search].present? || params[:status].present? %>
-        <%= link_to "Clear Filters", articles_path, class: "btn btn-secondary btn-sm" %>
-      <% end %>
-    </div>
+<div class="search-bar">
+  <%= form_with url: articles_path, method: :get do |f| %>
+    <%= f.text_field :search, value: params[:search], placeholder: "Search title, content, author…", class: "search-bar__input", "aria-label": "Search" %>
+    <%= f.select :status,
+        options_for_select([["All", ""], ["Published", "published"], ["Drafts", "draft"]], params[:status]),
+        {},
+        class: "search-bar__select", "aria-label": "Status" %>
+    <%= f.submit "Search", class: "btn btn-primary btn-sm" %>
+    <% if params[:search].present? || params[:status].present? %>
+      <%= link_to "Clear", articles_path, class: "btn btn-ghost btn-sm" %>
+    <% end %>
   <% end %>
 </div>
 
 <% if @articles.any? %>
-  <div class="articles-stats">
-    <p>Showing <%= @articles.size %> <%= "article".pluralize(@articles.size) %></p>
-  </div>
-  
-  <div class="articles-grid">
-    <% @articles.each do |article| %>
-      <div class="article-card">
-        <h2 class="article-title"><%= article.title %></h2>
-        <div class="article-meta">
-          <span>By <%= article.author %></span>
-          <span class="badge <%= article.published ? 'badge-published' : 'badge-draft' %>">
-            <%= article.published_status %>
-          </span>
-        </div>
-        <div class="article-content">
-          <%= truncate(article.content, length: 150) %>
-        </div>
-        <div class="article-actions">
-          <%= link_to "View Article", article, class: "btn btn-primary btn-sm" %>
-          <%= link_to "Edit", edit_article_path(article), class: "btn btn-secondary btn-sm" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <table class="article-list">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Status</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each do |article| %>
+        <tr class="article-row">
+          <td class="article-row__title" data-label="Title">
+            <%= link_to article.title, article %>
+            <p class="article-row__excerpt"><%= truncate(article.content, length: 90) %></p>
+          </td>
+          <td class="article-row__author" data-label="Author"><%= article.author %></td>
+          <td data-label="Status"><span class="badge <%= article.published ? 'badge--published' : 'badge--draft' %>"><%= article.published_status %></span></td>
+          <td class="article-row__date" data-label="Date"><%= article.created_at.strftime("%d %b %Y") %></td>
+          <td class="article-row__actions">
+            <%= link_to "Edit", edit_article_path(article), class: "btn btn-ghost btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
   <div class="empty-state">
     <% if params[:search].present? || params[:status].present? %>
-      <p>No articles found matching your search criteria.</p>
-      <%= link_to "Clear Filters", articles_path, class: "btn btn-secondary" %>
+      <p>No articles match your filters.</p>
+      <%= link_to "Clear Filters", articles_path, class: "btn btn-ghost" %>
     <% else %>
-      <p>No articles found. Start by creating your first article!</p>
-      <%= link_to "Create New Article", new_article_path, class: "btn btn-primary" %>
+      <p>No articles yet.</p>
+      <%= link_to "+ Create your first article", new_article_path, class: "btn btn-primary" %>
     <% end %>
   </div>
 <% end %>

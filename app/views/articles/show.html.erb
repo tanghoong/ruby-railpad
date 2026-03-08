@@ -3,7 +3,7 @@
     <h1 class="article-detail-title"><%= @article.title %></h1>
     <div class="article-detail-meta">
       <span><strong>Author:</strong> <%= @article.author %></span>
-      <span class="badge <%= @article.published ? 'badge-published' : 'badge-draft' %>">
+      <span class="badge <%= @article.published ? 'badge--published' : 'badge--draft' %>">
         <%= @article.published_status %>
       </span>
       <span><strong>Created:</strong> <%= @article.created_at.strftime("%B %d, %Y") %></span>

@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_10_11_125253) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_08_131221) do
   create_table "articles", force: :cascade do |t|
     t.string "author"
     t.text "content"
     t.datetime "created_at", null: false
-    t.boolean "published"
+    t.boolean "published", default: false, null: false
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_articles_on_created_at"
+    t.index ["published"], name: "index_articles_on_published"
   end
 end
