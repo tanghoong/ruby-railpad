@@ -40,7 +40,9 @@ class ArticlesTest < ApplicationSystemTestCase
 
   test "should destroy Article" do
     visit article_url(@article)
-    click_on "Delete this article", match: :first
+    accept_confirm do
+      click_on "Delete this article", match: :first
+    end
 
     assert_text "Article was successfully destroyed"
   end
