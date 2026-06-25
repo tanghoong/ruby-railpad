@@ -1,0 +1,13 @@
+hello:
+  title: Hello Ruby
+  description: A simple hello world gist
+  code: puts "Hello, Ruby!"
+  language: ruby
+  published: true
+
+fibonacci:
+  title: Fibonacci sequence
+  description: Generate fibonacci numbers
+  code: "def fib(n); n <= 1 ? n : fib(n-1) + fib(n-2); end; puts fib(10)"
+  language: ruby
+  published: false

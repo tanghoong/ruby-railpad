@@ -49,7 +49,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   test "should filter articles by search term" do
     get articles_url, params: { search: "First" }
     assert_response :success
-    assert_select ".article-card", minimum: 1
+    assert_select ".article-row", minimum: 1
   end
 
   test "should filter articles by published status" do

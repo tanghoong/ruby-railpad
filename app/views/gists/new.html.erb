@@ -1,0 +1,11 @@
+<% content_for :title, "New Gist" %>
+
+<div class="page-header">
+  <h1>New Gist</h1>
+</div>
+
+<%= render "form", gist: @gist %>
+
+<div class="nav-actions">
+  <%= link_to "Back to gists", gists_path, class: "btn btn-secondary" %>
+</div>

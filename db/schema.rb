@@ -10,13 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_10_11_125253) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_08_220234) do
   create_table "articles", force: :cascade do |t|
     t.string "author"
     t.text "content"
     t.datetime "created_at", null: false
-    t.boolean "published"
+    t.boolean "published", default: false, null: false
     t.string "title"
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_articles_on_created_at"
+    t.index ["published"], name: "index_articles_on_published"
   end
+
+  create_table "gists", force: :cascade do |t|
+    t.integer "article_id"
+    t.text "code", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "language", default: "ruby", null: false
+    t.text "output"
+    t.datetime "output_at"
+    t.boolean "published", default: false, null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id", "created_at"], name: "index_gists_on_article_id_and_created_at"
+    t.index ["article_id"], name: "index_gists_on_article_id"
+    t.index ["created_at"], name: "index_gists_on_created_at"
+    t.index ["published"], name: "index_gists_on_published"
+  end
+
+  add_foreign_key "gists", "articles"
 end

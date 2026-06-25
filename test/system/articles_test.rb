@@ -12,16 +12,16 @@ class ArticlesTest < ApplicationSystemTestCase
 
   test "should create article" do
     visit articles_url
-    click_on "New article"
+    click_on "+ New"
 
     fill_in "Author", with: @article.author
     fill_in "Content", with: @article.content
-    check "Published" if @article.published
+    check "Publish this article" if @article.published
     fill_in "Title", with: @article.title
     click_on "Create Article"
 
     assert_text "Article was successfully created"
-    click_on "Back"
+    click_on "Back to articles"
   end
 
   test "should update Article" do
@@ -30,17 +30,19 @@ class ArticlesTest < ApplicationSystemTestCase
 
     fill_in "Author", with: @article.author
     fill_in "Content", with: @article.content
-    check "Published" if @article.published
+    check "Publish this article" if @article.published
     fill_in "Title", with: @article.title
     click_on "Update Article"
 
     assert_text "Article was successfully updated"
-    click_on "Back"
+    click_on "Back to articles"
   end
 
   test "should destroy Article" do
     visit article_url(@article)
-    click_on "Destroy this article", match: :first
+    accept_confirm do
+      click_on "Delete this article", match: :first
+    end
 
     assert_text "Article was successfully destroyed"
   end

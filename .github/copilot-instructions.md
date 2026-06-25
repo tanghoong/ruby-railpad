@@ -1,79 +1,115 @@
 # Copilot Instructions for ror-cms
 
 ## Project Overview
-This is a Ruby on Rails CMS (Content Management System) project. The goal is to build a modern, scalable content management system using Ruby on Rails framework.
+A Ruby on Rails 8 CMS built for article management with modern frontend technologies. Features CRUD operations for articles with JSON API support and demonstrates Rails' latest conventions.
 
-## Technology Stack
-- **Framework**: Ruby on Rails
-- **Language**: Ruby
-- **License**: MIT License (Copyright 2025 Charlie)
+## Architecture & Key Components
 
-## Coding Guidelines
+### Technology Stack
+- **Rails 8.0.3** with Ruby 3.2.3 
+- **Frontend**: Tailwind CSS + Slim templating + Hotwire (Turbo/Stimulus)
+- **Database**: SQLite3 with Solid Cache/Queue/Cable for production
+- **Testing**: Minitest with Capybara system tests
+- **Deployment**: Docker + Kamal with Thruster for production
 
-### Ruby and Rails Best Practices
-- Follow Ruby community style guide (RuboCop standards)
-- Use Rails conventions and idioms
-- Prefer RESTful routing and resource-based controllers
-- Use ActiveRecord associations and validations appropriately
-- Follow the "Convention over Configuration" principle
-- Use Rails generators when appropriate for consistency
+### Data Model
+Simple Article model with fields: `title`, `content`, `author`, `published` (boolean)
+- Located in `app/models/article.rb` (currently minimal)
+- Migration in `db/migrate/20251011125253_create_articles.rb`
 
-### Code Style
-- Use 2 spaces for indentation (Ruby convention)
-- Follow Ruby naming conventions:
-  - snake_case for methods and variables
-  - CamelCase for classes and modules
-  - SCREAMING_SNAKE_CASE for constants
-- Keep methods small and focused (single responsibility principle)
-- Use meaningful variable and method names
-- Avoid long parameter lists; use keyword arguments when appropriate
+### Routing & Controllers
+- Root route: `articles#index` (replaces traditional home page)
+- RESTful articles resource with dual format support (HTML/JSON)
+- Controllers follow Rails conventions with strong parameters
+- JSON API responses via JBuilder templates
 
-### Security Practices
-- Always use strong parameters in controllers
-- Sanitize user input to prevent XSS attacks
-- Use parameterized queries to prevent SQL injection (ActiveRecord does this by default)
-- Implement proper authentication and authorization
-- Keep sensitive data (API keys, passwords) in environment variables or Rails credentials
-- Use Rails' built-in CSRF protection
-- Validate and sanitize file uploads
-- Use secure session handling
+## Development Workflow
 
-## Testing Requirements
-- Write tests for new features and bug fixes
-- Follow Rails testing conventions:
-  - Use RSpec or Minitest (whichever is configured in the project)
-  - Write unit tests for models
-  - Write integration tests for controllers
-  - Write system/feature tests for user-facing functionality
-- Aim for meaningful test coverage, especially for business logic
-- Use factories (FactoryBot) or fixtures for test data
-- Mock external dependencies in tests
+### Essential Commands
+```bash
+# Setup (runs bundle install, db:prepare, starts dev server)
+bin/setup
 
-## Documentation
-- Add comments for complex business logic
-- Document public API methods with YARD-style comments
-- Keep README.md updated with setup instructions and project information
-- Document configuration steps and environment variables
-- Add inline documentation for non-obvious code decisions
+# Development server (just Rails server)
+bin/dev
 
-## Database and Migrations
-- Always create reversible migrations
-- Include appropriate indexes for foreign keys and frequently queried columns
-- Use database-level constraints where appropriate
-- Test migrations both up and down
-- Keep migrations small and focused
+# Full development with CSS watching
+# Use Procfile.dev: web + css processes
+foreman start -f Procfile.dev
 
-## Git Workflow
-- Write clear, descriptive commit messages
-- Keep commits atomic and focused
-- Follow conventional commit format when possible
-- Don't commit sensitive data or credentials
-- Keep the repository clean (use .gitignore for build artifacts, logs, etc.)
+# Database management
+bin/rails db:prepare  # Create/migrate/seed
+bin/rails db:migrate
+bin/rails db:seed
 
-## Additional Guidelines
-- Prefer using Rails helpers and built-in methods over custom implementations
-- Keep controllers thin, move business logic to models or service objects
-- Use concerns for shared behavior across models or controllers
-- Implement proper error handling and logging
-- Consider performance implications of N+1 queries
-- Use caching strategies where appropriate for better performance
+# Testing
+bin/rails test        # All tests
+bin/rails test:system # System tests only
+
+# Code quality
+bin/rubocop          # Linting (Omakase Ruby styling)
+bin/brakeman         # Security analysis
+```
+
+### File Structure Patterns
+- **Views**: Mix of ERB (`articles/`) and Slim (`home/index.html.slim`)
+- **Styling**: Tailwind classes in templates, config in `config/tailwind.config.js`
+- **Assets**: Modern Rails asset pipeline with Propshaft
+- **Tests**: Standard Rails test structure with fixtures
+
+## Project-Specific Conventions
+
+### Frontend Approach
+- **Slim templates preferred** for new views (see `app/views/home/index.html.slim`)
+- **Tailwind utility classes** for styling (configured for Slim/ERB)
+- **No JavaScript framework** - uses Rails' Hotwire stack
+- **Responsive design** with Tailwind's responsive prefixes
+
+### Code Style (Omakase Ruby)
+- Uses `rubocop-rails-omakase` gem for opinionated Ruby styling
+- Configuration in `.rubocop.yml` inherits from omakase defaults
+- Enforces Rails community standards automatically
+
+### Testing Strategy
+- **Minitest** (not RSpec) - Rails default testing framework
+- **Fixtures** in `test/fixtures/articles.yml` for test data
+- **System tests** using headless Chrome for full-stack testing
+- **Parallel test execution** enabled by default
+
+### Deployment & Production
+- **Docker-first** deployment strategy with multi-stage Dockerfile
+- **Kamal** configuration in `config/deploy.yml` for container orchestration
+- **Thruster** for production HTTP acceleration (replaces nginx)
+- **Solid gems** (Cache/Queue/Cable) replace Redis dependencies
+
+## Integration Points
+
+### JSON API Design
+- All controller actions support `.json` format via `respond_to`
+- JBuilder templates in `app/views/articles/*.json.jbuilder`
+- Consistent error handling for both HTML and JSON responses
+
+### Asset Pipeline
+- **Tailwind CSS** compilation via `tailwindcss:watch` task
+- **Propshaft** for asset serving (modern replacement for Sprockets)
+- **Importmap** for JavaScript module management
+
+### Security Configuration
+- Rails credentials system for secrets (`config/credentials.yml.enc`)
+- Strong parameters pattern enforced in controllers
+- CSRF protection enabled by default
+
+## Development Tips
+
+### When Adding Features
+1. Use Rails generators: `bin/rails generate model/controller/migration`
+2. Follow RESTful conventions for new resources
+3. Add both HTML and JSON format support to controllers
+4. Include appropriate tests for new functionality
+5. Use Tailwind classes for styling, avoid custom CSS
+
+### Common Patterns
+- **Controller actions**: Always include `respond_to` block for dual format support
+- **Strong parameters**: Use `params.expect()` for parameter handling (Rails 8 syntax)
+- **View helpers**: Place in `app/helpers/` following Rails conventions
+- **Model validations**: Add appropriate validations and consider database constraints

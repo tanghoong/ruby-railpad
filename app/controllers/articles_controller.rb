@@ -23,6 +23,9 @@ class ArticlesController < ApplicationController
         @articles = @articles.unpublished
       end
     end
+
+    # Load once so .size / .any? / .each don't each fire a separate query
+    @articles = @articles.load
   end
 
   # GET /articles/1 or /articles/1.json

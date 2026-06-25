@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ruby --version)",
+      "Bash(gem --version)",
+      "Bash(bundle --version)",
+      "Bash(powershell.exe -Command \"Get-Command ruby -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source; Get-Command bundle -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\")",
+      "Bash(export PATH=\"/c/Ruby34-x64/bin:$PATH\")",
+      "Bash(bundle install)",
+      "Bash(bundle exec rails db:create db:migrate db:seed)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(bundle exec rails runner \"puts Article.count; Article.order\\(:id\\).each { |a| puts \"\"#{a.id}: #{a.title}\"\" }\")",
+      "Bash(bundle exec rails runner \"Article.where\\(id: [4,5,6]\\).destroy_all; puts \"\"Remaining: #{Article.count}\"\"\")",
+      "Bash(bundle exec rails runner \"Article.order\\(:id\\).each { |a| puts \"\"#{a.id}: #{a.title}\"\" }\")",
+      "Bash(bundle exec rails generate migration AddDefaultAndIndexesToArticles)",
+      "Bash(bundle exec rails db:migrate)",
+      "Bash(bundle exec rails test test/models/article_test.rb test/controllers/articles_controller_test.rb)",
+      "Bash(bundle exec rails test)",
+      "Bash(bundle exec ruby -Itest test/models/article_test.rb)",
+      "Bash(bundle exec rails db:migrate RAILS_ENV=test)",
+      "Bash(bundle exec ruby -e \"require ''minitest''; puts Minitest::VERSION\")",
+      "Bash(bundle exec ruby -Itest test/models/article_test.rb test/controllers/articles_controller_test.rb)",
+      "Bash(git add .gitignore Gemfile Gemfile.lock README.md app/assets/stylesheets/application.css app/controllers/articles_controller.rb app/views/articles/index.html.erb app/views/articles/show.html.erb app/views/layouts/application.html.erb config/routes.rb db/schema.rb db/seeds.rb public/icon.svg test/controllers/articles_controller_test.rb test/system/articles_test.rb db/migrate/20260308131221_add_default_and_indexes_to_articles.rb docs/ trash/)",
+      "Bash(git add -u app/assets/stylesheets/application.css.old app/assets/stylesheets/application.tailwind.css app/views/layouts/mailer.html.erb app/views/layouts/mailer.text.erb app/views/pwa/manifest.json.erb app/views/pwa/service-worker.js)",
+      "Bash(git commit:*)",
+      "Bash(bundle exec rails db:seed)",
+      "Bash(bundle exec ruby -Itest test/models/gist_test.rb)",
+      "Bash(bundle exec ruby -Itest test/controllers/gists_controller_test.rb)",
+      "Bash(bundle exec ruby -Itest test/controllers/articles_controller_test.rb)",
+      "Bash(bundle exec rails runner \"puts Rails.autoloaders.main.dirs\")",
+      "Bash(bundle exec rails runner \":*)",
+      "Bash(bundle exec rails runner \"g = Gist.new\\(title: ''Test'', code: ''puts 2 + 2'', language: ''ruby''\\); result = GistExecutionService.new\\(g\\).call; puts result.inspect\")",
+      "Bash(bundle exec rails runner \"g = Gist.new\\(title: ''Bad'', code: ''system\\(\"\"echo hack\"\"\\)'', language: ''ruby''\\); result = GistExecutionService.new\\(g\\).call; puts result.inspect\")"
+    ]
+  }
+}

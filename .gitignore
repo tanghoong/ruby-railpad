@@ -51,3 +51,19 @@
 /public/assets
 /public/packs
 /public/packs-test
+
+# Ignore local stash/patch/backup artifacts
+*.stash
+stash-*.patch
+*.orig
+*.rej
+*.bak
+*.swp
+*.swo
+*~
+
+
+# Ignore local SQLite binary artifacts
+/sqlite.zip
+/sqlite/
+

@@ -3,7 +3,7 @@
     <h1 class="article-detail-title"><%= @article.title %></h1>
     <div class="article-detail-meta">
       <span><strong>Author:</strong> <%= @article.author %></span>
-      <span class="badge <%= @article.published ? 'badge-published' : 'badge-draft' %>">
+      <span class="badge <%= @article.published ? 'badge--published' : 'badge--draft' %>">
         <%= @article.published_status %>
       </span>
       <span><strong>Created:</strong> <%= @article.created_at.strftime("%B %d, %Y") %></span>
@@ -14,6 +14,28 @@
     <%= simple_format(@article.content) %>
   </div>
 </div>
+
+<% if @article.gists.published.any? %>
+  <section class="article-gists">
+    <h2>Code Snippets</h2>
+    <% @article.gists.published.recent.each do |gist| %>
+      <div class="code-block">
+        <div class="code-block__header">
+          <span class="code-block__lang"><%= gist.language %></span>
+          <span style="color:var(--white);font-size:0.8rem;font-weight:500;">
+            <%= link_to gist.title, gist, style: "color:inherit;" %>
+          </span>
+        </div>
+        <pre><code class="language-ruby"><%= gist.code %></code></pre>
+      </div>
+    <% end %>
+  </section>
+<% end %>
+
+<script>
+  document.addEventListener("turbo:load", function() { if (window.Prism) Prism.highlightAll(); });
+  document.addEventListener("DOMContentLoaded", function() { if (window.Prism) Prism.highlightAll(); });
+</script>
 
 <div class="nav-actions">
   <%= link_to "Edit this article", edit_article_path(@article), class: "btn btn-secondary" %>
