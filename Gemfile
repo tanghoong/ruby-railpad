@@ -58,7 +58,7 @@ end
 
 group :test do
   # Pin minitest to 5.x — minitest 6.x has an incompatible API with Rails 8.1
-  gem "minitest", "~> 5.25"
+  gem "minitest", "~> 6.0"
 
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
